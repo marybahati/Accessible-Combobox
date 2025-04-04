@@ -8,25 +8,29 @@ interface ComboBoxProps {
   onChange: (values: string[]) => void;
 }
 
-export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => {
+export const ComboBox = ({
+  label,
+  selectedValues,
+  onChange,
+}: ComboBoxProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredOptions = dropdownData.filter(option =>
+  const filteredOptions = dropdownData.filter((option) =>
     option.label.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   // Toggle selection of an option
   const handleSelect = (value: string) => {
     if (!value.trim()) return;
-    
+
     const newValues = selectedValues.includes(value)
       ? selectedValues.filter((v) => v !== value)
       : [...selectedValues, value];
-    
+
     onChange(newValues);
     setInputValue("");
     setFocusedIndex(-1);
@@ -45,11 +49,15 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        setFocusedIndex(prev => prev >= filteredOptions.length - 1 ? 0 : prev + 1);
+        setFocusedIndex((prev) =>
+          prev >= filteredOptions.length - 1 ? 0 : prev + 1
+        );
         break;
       case "ArrowUp":
         e.preventDefault();
-        setFocusedIndex(prev => prev <= 0 ? filteredOptions.length - 1 : prev - 1);
+        setFocusedIndex((prev) =>
+          prev <= 0 ? filteredOptions.length - 1 : prev - 1
+        );
         break;
       case "Enter":
         e.preventDefault();
@@ -76,7 +84,10 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -88,28 +99,26 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
   // Scroll focused option into view
   useEffect(() => {
     if (focusedIndex >= 0 && containerRef.current && isOpen) {
-      const option = containerRef.current.querySelector(`[data-index="${focusedIndex}"]`);
+      const option = containerRef.current.querySelector(
+        `[data-index="${focusedIndex}"]`
+      );
       option?.scrollIntoView({ block: "nearest" });
     }
   }, [focusedIndex, isOpen]);
 
   return (
-    <div 
+    <div
       className="combobox"
       ref={containerRef}
       aria-haspopup="listbox"
       aria-expanded={isOpen}
     >
-      <label 
-        id="combo-label" 
-        htmlFor="combobox-input"
-        className="label"
-      >
+      <label id="combo-label" htmlFor="combobox-input" className="label">
         {label}
       </label>
 
       <div
-        className={`tag-input ${isOpen ? "open" : ''}`}
+        className={`tag-input ${isOpen ? "open" : ""}`}
         onClick={() => {
           inputRef.current?.focus();
           setIsOpen(true);
@@ -118,9 +127,11 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
         aria-controls="dropdown-options"
         aria-labelledby="combo-label"
       >
-         {/* Render selected values */}
+        {/* Render selected values */}
         {selectedValues.map((value) => {
-          const optionLabel = dropdownData.find((item) => item.value === value)?.label;
+          const optionLabel = dropdownData.find(
+            (item) => item.value === value
+          )?.label;
           return (
             <span
               key={value}
@@ -164,13 +175,29 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
           aria-autocomplete="list"
           aria-controls="dropdown-options"
           aria-activedescendant={
-            focusedIndex >= 0 ? `option-${filteredOptions[focusedIndex]?.value}` : undefined
+            focusedIndex >= 0
+              ? `option-${filteredOptions[focusedIndex]?.value}`
+              : undefined
           }
           aria-label="Search for options"
           aria-describedby="combo-label"
           tabIndex={0}
         />
-        <span>▼</span>
+        <span className="dropdown-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </span>
       </div>
 
       {/* Dropdown options */}
@@ -190,10 +217,8 @@ export const ComboBox = ({ label, selectedValues, onChange }: ComboBoxProps) => 
                 <li
                   key={option.value}
                   id={`option-${option.value}`}
-                  className={`option ${
-                    isSelected ? "selected" : ''
-                  } ${
-                    focusedIndex === index ? "focused" : ''
+                  className={`option ${isSelected ? "selected" : ""} ${
+                    focusedIndex === index ? "focused" : ""
                   }`}
                   role="option"
                   aria-selected={isSelected}
