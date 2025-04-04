@@ -18,3 +18,93 @@
   width: 700px;
   border-radius: 1.25rem;
 }
+
+.combobox {
+  position: relative;
+  width: 80%;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 5px;
+  min-height: 40px;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius: 5px;
+  cursor: text;
+
+  &.open {
+    border: 2px solid #3881C7;
+  }
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin: 2px;
+  font-size: 14px;
+}
+
+.remove-button {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 3px 5px;
+  min-width: 170px;
+  height: 35px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 0;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.option {
+  padding: 8px 10px;
+  cursor: pointer;
+
+  &:hover, &.focused {
+    background: #EFF1F9;
+  }
+
+  &.selected {
+    background: #3881C7;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.noOptions {
+  padding: 8px 10px;
+  color: #666;
+}

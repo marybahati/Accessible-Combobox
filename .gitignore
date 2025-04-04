@@ -7,10 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories
 node_modules
 dist
 dist-ssr
 *.local
+
+# Yarn files (The project uses npm)
+yarn.lock
 
 # Editor directories and files
 .vscode/*
