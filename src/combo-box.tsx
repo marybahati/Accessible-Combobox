@@ -248,7 +248,7 @@ export const ComboBox = ({
               aria-selected="false"
               tabIndex={-1}
             >
-              No options found
+              No results
             </li>
           )}
         </ul>
